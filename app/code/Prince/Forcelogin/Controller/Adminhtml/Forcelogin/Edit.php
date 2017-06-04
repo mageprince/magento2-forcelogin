@@ -5,20 +5,36 @@ namespace Prince\Forcelogin\Controller\Adminhtml\Forcelogin;
 
 class Edit extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
 {
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    private $resultPageFactory;
 
-    protected $resultPageFactory;
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    private $coreRegistry;
+
+    /**
+     * @var \Prince\Forcelogin\Model\Forcelogin
+     */
+    private $forceLoginModel;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
+     * @param \Prince\Forcelogin\Model\Forcelogin $forceLoginModel
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+        \Prince\Forcelogin\Model\Forcelogin $forceLoginModel
     ) {
         $this->resultPageFactory = $resultPageFactory;
+        $this->coreRegistry = $coreRegistry;
+        $this->forceLoginModel = $forceLoginModel;
         parent::__construct($context, $coreRegistry);
     }
 
@@ -31,7 +47,7 @@ class Edit extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
     {
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('forcelogin_id');
-        $model = $this->_objectManager->create('Prince\Forcelogin\Model\Forcelogin');
+        $model = $this->forceLoginModel;
         
         // 2. Initial checking
         if ($id) {
@@ -43,7 +59,7 @@ class Edit extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
                 return $resultRedirect->setPath('*/*/');
             }
         }
-        $this->_coreRegistry->register('prince_forcelogin_forcelogin', $model);
+        $this->coreRegistry->register('prince_forcelogin_forcelogin', $model);
         
         // 5. Build edit form
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */

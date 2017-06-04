@@ -6,7 +6,7 @@ namespace Prince\Forcelogin\Ui\Component\Listing\Column;
 class ForceloginActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
 
-    protected $urlBuilder;
+    private $urlBuilder;
     const URL_PATH_EDIT = 'prince_forcelogin/forcelogin/edit';
     const URL_PATH_DETAILS = 'prince_forcelogin/forcelogin/details';
     const URL_PATH_DELETE = 'prince_forcelogin/forcelogin/delete';

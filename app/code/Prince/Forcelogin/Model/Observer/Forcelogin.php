@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 namespace Prince\Forcelogin\Model\Observer;
@@ -7,31 +7,31 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 
 class Forcelogin implements ObserverInterface
-{   
+{
     /**
      * @var \Prince\Forcelogin\Helper\Data
      */
-    protected $_helper;
+    private $helper;
 
     /**
      * @var Magento\Framework\App\ResponseFactory
      */
-    protected $_responseFactory;
+    private $responseFactory;
 
     /**
      * @var \Magento\Framework\UrlInterface
      */
-    protected $_url;
+    private $url;
 
     /**
      * @var \Magento\Framework\Message\ManagerInterface
      */
-    protected $_messageManager;
+    private $messageManager;
 
     /**
-     * @param \Prince\Forcelogin\Helper\Data              $helper
-     * @param \Magento\Framework\App\ResponseFactory      $responseFactory
-     * @param \Magento\Framework\UrlInterface             $url
+     * @param \Prince\Forcelogin\Helper\Data $helper
+     * @param \Magento\Framework\App\ResponseFactory $responseFactory
+     * @param \Magento\Framework\UrlInterface $url
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
     public function __construct(
@@ -39,46 +39,39 @@ class Forcelogin implements ObserverInterface
         \Magento\Framework\App\ResponseFactory $responseFactory,
         \Magento\Framework\UrlInterface $url,
         \Magento\Framework\Message\ManagerInterface $messageManager
-    )
-    {   
-        $this->_responseFactory = $responseFactory;
-        $this->_helper = $helper;
-        $this->_url = $url;
-        $this->_messageManager = $messageManager;
+    ) {
+        $this->responseFactory = $responseFactory;
+        $this->helper = $helper;
+        $this->url = $url;
+        $this->messageManager = $messageManager;
     }
     
     public function execute(Observer $observer)
-    {    
-        $url = $this->_helper->getAfterBaseUrl(); 
-        $collection = $this->_helper->getUrlCollection($url);
+    {
+        $url = $this->helper->getAfterBaseUrl();
+        $collection = $this->helper->getUrlCollection($url);
+        $enable = $this->helper->getEnable();
+        $urlCondition = $this->helper->getConfig();
+        $defaultAction = $this->helper->getDefaultAction();
+        $isCustomerLogin = $this->helper->checkCustomerlogin();
+        $message = $this->helper->getMessage();
         
-        $enable = $this->_helper->getEnable();
-        $urlCondition = $this->_helper->getConfig();
-        $defaultAction = $this->_helper->getDefaultAction();
-        $isCustomerLogin = $this->_helper->checkCustomerlogin();
-        $message = "Please login or create account to access page";
-        
-        if(!$defaultAction && !$isCustomerLogin && $enable)
-        {    
-            if($urlCondition)
-            {
-                if(!$collection)
-                {
-                    $this->_messageManager->addError($message);
-                    $CustomRedirectionUrl = $this->_url->getUrl('customer/account/login');
-                    $this->_responseFactory->create()->setRedirect($CustomRedirectionUrl)->sendResponse();
-                    exit();
-                }   
-            }else{
-                if($collection)
-                {
-                    $this->_messageManager->addError($message);
-                    $CustomRedirectionUrl = $this->_url->getUrl('customer/account/login');
-                    $this->_responseFactory->create()->setRedirect($CustomRedirectionUrl)->sendResponse();
-                    exit();
-                } 
+        if (!$defaultAction && !$isCustomerLogin && $enable) {
+            if ($urlCondition) {
+                if (!$collection) {
+                    $this->messageManager->addError($message);
+                    $CustomRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $this->responseFactory->create()->setRedirect($CustomRedirectionUrl)->sendResponse();
+                    die();
+                }
+            } else {
+                if ($collection) {
+                    $this->messageManager->addError($message);
+                    $CustomRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $this->responseFactory->create()->setRedirect($CustomRedirectionUrl)->sendResponse();
+                    die();
+                }
             }
         }
     }
-
 }

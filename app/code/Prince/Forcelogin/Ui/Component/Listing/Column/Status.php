@@ -14,5 +14,4 @@ class Status implements \Magento\Framework\Option\ArrayInterface
     {
         return [['value' => 1, 'label' => __('Enable')], ['value' => 0, 'label' => __('Disable')]];
     }
-
 }

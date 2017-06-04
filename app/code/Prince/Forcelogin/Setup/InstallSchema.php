@@ -19,19 +19,20 @@ class InstallSchema implements InstallSchemaInterface
     ) {
         $installer = $setup;
         $installer->startSetup();
-
         $table_prince_forcelogin = $setup->getConnection()->newTable($setup->getTable('prince_forcelogin'));
 
-        
         $table_prince_forcelogin->addColumn(
             'forcelogin_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
-            array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,),
+            [
+                'identity' => true,
+                'nullable' => false,
+                'primary' => true,
+                'unsigned' => true,
+            ],
             'Entity ID'
         );
-        
-
         
         $table_prince_forcelogin->addColumn(
             'name',
@@ -41,8 +42,6 @@ class InstallSchema implements InstallSchemaInterface
             'name'
         );
         
-
-        
         $table_prince_forcelogin->addColumn(
             'url',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -50,8 +49,6 @@ class InstallSchema implements InstallSchemaInterface
             [],
             'url'
         );
-        
-
         
         $table_prince_forcelogin->addColumn(
             'storeview',
@@ -61,8 +58,6 @@ class InstallSchema implements InstallSchemaInterface
             'storeview'
         );
         
-
-        
         $table_prince_forcelogin->addColumn(
             'customer_group',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -70,8 +65,6 @@ class InstallSchema implements InstallSchemaInterface
             [],
             'customer_group'
         );
-        
-
         
         $table_prince_forcelogin->addColumn(
             'status',
@@ -81,9 +74,7 @@ class InstallSchema implements InstallSchemaInterface
             'status'
         );
         
-
         $setup->getConnection()->createTable($table_prince_forcelogin);
-
         $setup->endSetup();
     }
 }

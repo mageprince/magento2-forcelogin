@@ -5,14 +5,12 @@ namespace Prince\Forcelogin\Api\Data;
 
 interface ForceloginInterface
 {
-
     const URL = 'url';
     const FORCELOGIN_ID = 'forcelogin_id';
     const CUSTOMER_GROUP = 'customer_group';
     const NAME = 'name';
     const STOREVIEW = 'storeview';
     const STATUS = 'status';
-
 
     /**
      * Get forcelogin_id

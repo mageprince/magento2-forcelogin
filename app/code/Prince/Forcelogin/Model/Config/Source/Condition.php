@@ -16,5 +16,4 @@ class Condition implements \Magento\Framework\Option\ArrayInterface
             ['value' => 1, 'label' => __('Entered URL\'s Allowed without login')],
         ];
     }
-
 }

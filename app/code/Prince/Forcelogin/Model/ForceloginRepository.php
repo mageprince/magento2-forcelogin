@@ -18,23 +18,45 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class ForceloginRepository implements forceloginRepositoryInterface
 {
+    /**
+     * @var DataObjectHelper
+     */
+    private $dataObjectHelper;
 
-    protected $dataObjectHelper;
+    /**
+     * @var ForceloginInterfaceFactory
+     */
+    private $dataForceloginFactory;
 
-    protected $dataForceloginFactory;
+    /**
+     * @var ForceloginSearchResultsInterfaceFactory
+     */
+    private $searchResultsFactory;
 
-    protected $searchResultsFactory;
-
+    /**
+     * @var StoreManagerInterface
+     */
     private $storeManager;
 
-    protected $resource;
+    /**
+     * @var ResourceForcelogin
+     */
+    private $resource;
 
-    protected $dataObjectProcessor;
+    /**
+     * @var DataObjectHelper
+     */
+    private $dataObjectProcessor;
 
-    protected $forceloginFactory;
+    /**
+     * @var ForceloginFactory
+     */
+    private $forceloginFactory;
 
-    protected $forceloginCollectionFactory;
-
+    /**
+     * @var ForceloginCollectionFactory
+     */
+    private $forceloginCollectionFactory;
 
     /**
      * @param ResourceForcelogin $resource
@@ -72,10 +94,6 @@ class ForceloginRepository implements forceloginRepositoryInterface
     public function save(
         \Prince\Forcelogin\Api\Data\ForceloginInterface $forcelogin
     ) {
-        /* if (empty($forcelogin->getStoreId())) {
-            $storeId = $this->storeManager->getStore()->getId();
-            $forcelogin->setStoreId($storeId);
-        } */
         try {
             $this->resource->save($forcelogin);
         } catch (\Exception $exception) {

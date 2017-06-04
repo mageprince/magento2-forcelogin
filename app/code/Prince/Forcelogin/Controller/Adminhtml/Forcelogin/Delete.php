@@ -5,6 +5,29 @@ namespace Prince\Forcelogin\Controller\Adminhtml\Forcelogin;
 
 class Delete extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
 {
+    /**
+     * @var \Prince\Forcelogin\Model\Forcelogin
+     */
+    private $forceLoginModel;
+
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    private $coreRegistry;
+    
+    /**
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Prince\Forcelogin\Model\Forcelogin $forceLoginModel
+     * @param \Magento\Framework\Registry $coreRegistry
+     */
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Prince\Forcelogin\Model\Forcelogin $forceLoginModel,
+        \Magento\Framework\Registry $coreRegistry
+    ) {
+        $this->forceLoginModel = $forceLoginModel;
+        parent::__construct($context, $coreRegistry);
+    }
 
     /**
      * Delete action
@@ -20,7 +43,7 @@ class Delete extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
         if ($id) {
             try {
                 // init model and delete
-                $model = $this->_objectManager->create('Prince\Forcelogin\Model\Forcelogin');
+                $model = $this->forceLoginModel;
                 $model->load($id);
                 $model->delete();
                 // display success message

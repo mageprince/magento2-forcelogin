@@ -6,7 +6,10 @@ namespace Prince\Forcelogin\Controller\Adminhtml\Forcelogin;
 class Index extends \Magento\Backend\App\Action
 {
 
-    protected $resultPageFactory;
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    private $resultPageFactory;
 
     /**
      * Constructor

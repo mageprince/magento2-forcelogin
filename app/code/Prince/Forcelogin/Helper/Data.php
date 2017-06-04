@@ -2,72 +2,66 @@
 
 namespace Prince\Forcelogin\Helper;
 
+use Magento\Customer\Model\Session;
+use Magento\Framework\App\Request\Http;
+
+/**
+ * Class Data
+ * @package Prince\Forcelogin\Helper
+ */
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
-     * @var \Magento\Framework\UrlInterface
-     */
-    protected $_urlInterface;
-
-    /**
-     * @var \Prince\Forcelogin\Model\Forcelogin
-     */
-    protected $_forceLoginModel;
-
-    /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $_customerSession;
-
-    /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    protected $_store;
+    private $customerSession;
 
     /**
      * @var \Magento\Framework\App\Request\Http
      */
-    protected $_request;
+    private $request;
+
+    /**
+     * @var \Magento\Framework\UrlInterface
+     */
+    private $urlInterface;
+
+    /**
+     * @var \Prince\Forcelogin\Model\Forcelogin
+     */
+    private $forceLoginModel;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    private $store;
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
-    protected $_scopeConfig;
+    public $scopeConfig;
 
     /**
-     * @var \Magento\Customer\Model\Session
-     */
-    protected $_session;
-
-    /**
-     * @param \Magento\Framework\UrlInterface $urlInterface
-     * @param \Prince\Forcelogin\Model\Forcelogin $forceLoginModel
      * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\App\Request\Http $request
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Customer\Model\Session $session
+     * @param \Prince\Forcelogin\Model\Forcelogin $forceLoginModel
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      */
     public function __construct(
-        \Magento\Framework\UrlInterface $urlInterface,
+        \Magento\Framework\App\Helper\Context $context,
+        Session $customerSession,
+        Http $request,
         \Prince\Forcelogin\Model\Forcelogin $forceLoginModel,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Customer\Model\Session $session
-
-    )
-    {
-        $this->_urlInterface = $urlInterface;
-        $this->_forceLoginModel = $forceLoginModel;
-        $this->_customerSession = $customerSession;
-        $this->_store = $storeManager;
-        $this->_request = $request;
-        $this->_scopeConfig = $scopeConfig;
-        $this->_session = $session;
+        \Magento\Store\Model\StoreManagerInterface $storeManager
+    ) {
+        $this->customerSession = $customerSession;
+        $this->request = $request;
+        $this->urlInterface = $context->getUrlBuilder();
+        $this->scopeConfig = $context->getScopeConfig();
+        $this->forceLoginModel = $forceLoginModel;
+        $this->store = $storeManager;
+        parent::__construct($context);
     }
-
 
     /**
      * Retrieve current url
@@ -76,7 +70,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCurrentUrl()
     {
-        return $this->_urlInterface->getCurrentUrl();
+        return $this->urlInterface->getCurrentUrl();
     }
 
     /**
@@ -86,8 +80,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getAfterBaseUrl()
     {
-        $currentUrl = $this->_urlInterface->getCurrentUrl();
-        $baseUrl = $this->_urlInterface->getBaseUrl();
+        $currentUrl = $this->urlInterface->getCurrentUrl();
+        $baseUrl = $this->urlInterface->getBaseUrl();
         $url = rtrim(str_replace($baseUrl, "", $currentUrl), '/');
         return $url;
     }
@@ -99,14 +93,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCollection()
     {
-        return $this->_forceLoginModel->getCollection();
-
+        return $this->forceLoginModel->getCollection();
     }
     
     /**
      * Retrieve url collection
      *
-     * @return Number
+     * @param string $url
+     * @return int
      */
     public function getUrlCollection($url)
     {
@@ -114,84 +108,118 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $collection->addFieldToFilter('status', 1);
         $collection->addFieldToFilter(
             'customer_group',
-                array(
-                    array('null' => true),
-                    array('finset' => $this->getCurrentCustomer())
-                    )
-                );
+            [
+                ['null' => true],
+                ['finset' => $this->getCurrentCustomer()]
+            ]
+        );
         $collection->addFieldToFilter(
-            'storeview', 
-            array(
-                array('eq' => 0),
-                array('finset' => $this->getCurrentStore())
-                )
-            );
+            'storeview',
+            [
+                ['eq' => 0],
+                ['finset' => $this->getCurrentStore()]
+            ]
+        );
 
-        return $collection->count();
+        return $collection->getSize();
     }
 
     /**
      * Retrieve current customer group id
      *
-     * @return Number
+     * @return int
      */
     public function getCurrentCustomer()
     {
-        return $this->_customerSession->getCustomer()->getGroupId();
+        return $this->customerSession->getCustomer()->getGroupId();
     }
 
     /**
      * Retrieve current store Id
      *
-     * @return Number
+     * @return int
      */
     public function getCurrentStore()
     {
-        return $this->_store->getStore()->getId();
+        return $this->store->getStore()->getId();
     }
 
     /**
      * Retrieve config value
+     *
+     * @return string
      */
     public function getConfig()
     {
-        return $this->_scopeConfig->getValue('forcelogin/general/urlcondition', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(
+            'forcelogin/general/urlcondition',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
-
+    
+    /**
+     * Retrieve config value
+     *
+     * @return string
+     */
     public function getEnable()
     {
-        return $this->_scopeConfig->getValue('forcelogin/general/enable', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(
+            'forcelogin/general/enable',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 
+    /**
+     * Retrieve config value
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->scopeConfig->getValue(
+            'forcelogin/general/message',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
+     * Retrieve config value
+     *
+     * @return boolean
+     */
     public function checkCustomerlogin()
     {
-        if ($this->_session->isLoggedIn()) {
-            return true; 
+        if ($this->customerSession->isLoggedIn()) {
+            return true;
         } else {
             return false;
         }
     }
     
+    /**
+     * Retrieve config value
+     *
+     * @return boolean
+     */
     public function getDefaultAction()
-    {   
-        $currentAction = $this->_request->getFullActionName();
+    {
+        $currentAction = $this->request->getFullActionName();
         $loginAction = "customer_account_login";
         $logoutAction = "customer_account_logoutSuccess";
         $registerAction = "customer_account_create";
         $accountAction = "customer_account_index";
         $currentUrl = $this->getCurrentUrl();
-        $loginPostUrl = $this->_urlInterface->getUrl('customer/account/loginPost');
-        if($currentAction != $loginAction
-            && $currentAction != $logoutAction 
+        $loginPostUrl = $this->urlInterface->getUrl('customer/account/loginPost');
+        if ($currentAction != $loginAction
+            && $currentAction != $logoutAction
             && $currentAction != $registerAction
             && $currentAction != $accountAction
             && $currentUrl != $loginPostUrl
-        ){
+        ) {
             return false;
-        }else{
+        } else {
             return true;
         }
-        
     }
-
 }

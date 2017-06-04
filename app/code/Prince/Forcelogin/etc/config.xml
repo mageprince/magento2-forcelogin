@@ -5,6 +5,7 @@
             <general>
                 <enable>1</enable>
                 <urlcondition>0</urlcondition>
+                <message>Please login or create account to access page</message>
             </general>
         </forcelogin>
     </default>

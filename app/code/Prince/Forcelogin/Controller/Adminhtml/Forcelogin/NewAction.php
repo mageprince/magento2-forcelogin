@@ -5,8 +5,10 @@ namespace Prince\Forcelogin\Controller\Adminhtml\Forcelogin;
 
 class NewAction extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
 {
-
-    protected $resultForwardFactory;
+    /**
+     * @var \Magento\Backend\Model\View\Result\ForwardFactory
+     */
+    private $resultForwardFactory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context

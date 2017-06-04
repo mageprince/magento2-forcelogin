@@ -7,7 +7,11 @@ abstract class Forcelogin extends \Magento\Backend\App\Action
 {
 
     const ADMIN_RESOURCE = 'Prince_Forcelogin::top_level';
-    protected $_coreRegistry;
+    
+    /**
+     * @var \Magento\Framework\Registry
+     */
+    private $coreRegistry;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -17,7 +21,7 @@ abstract class Forcelogin extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry
     ) {
-        $this->_coreRegistry = $coreRegistry;
+        $this->coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
 

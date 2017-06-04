@@ -7,8 +7,6 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 
 interface ForceloginRepositoryInterface
 {
-
-
     /**
      * Save forcelogin
      * @param \Prince\Forcelogin\Api\Data\ForceloginInterface $forcelogin

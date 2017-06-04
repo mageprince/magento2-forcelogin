@@ -8,12 +8,17 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
+    /**
+     * @var CollectionFactory
+     */
+    private $collection;
 
-    protected $collection;
+    /**
+     * @var DataPersistorInterface
+     */
+    private $dataPersistor;
 
-    protected $dataPersistor;
-
-    protected $loadedData;
+    private $loadedData;
 
     /**
      * Constructor

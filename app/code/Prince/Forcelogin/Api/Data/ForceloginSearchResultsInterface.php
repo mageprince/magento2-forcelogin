@@ -5,8 +5,6 @@ namespace Prince\Forcelogin\Api\Data;
 
 interface ForceloginSearchResultsInterface extends \Magento\Framework\Api\SearchResultsInterface
 {
-
-
     /**
      * Get forcelogin list.
      * @return \Prince\Forcelogin\Api\Data\ForceloginInterface[]
