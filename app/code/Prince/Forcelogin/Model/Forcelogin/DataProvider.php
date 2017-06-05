@@ -11,7 +11,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     /**
      * @var CollectionFactory
      */
-    private $collection;
+    protected $collection;
 
     /**
      * @var DataPersistorInterface
