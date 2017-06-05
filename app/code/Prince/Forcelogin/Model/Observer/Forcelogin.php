@@ -30,7 +30,7 @@ class Forcelogin implements ObserverInterface
 
     /**
      * @param \Prince\Forcelogin\Helper\Data $helper
-     * @param Magento\Framework\App\Response\Http $redirect
+     * @param \Magento\Framework\App\Response\Http $redirect
      * @param \Magento\Framework\UrlInterface $url
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
