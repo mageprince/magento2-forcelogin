@@ -10,6 +10,7 @@ You can also force login for specific customer group and storeview.
 - Copy the content of the repository to the Magento 2 root folder
 - Run command: php bin/magento setup:upgrade
 - Run command: php bin/magento setup:static-content:deploy
+- Now flush cache: php bin/magento cache:flush
 
 # Screenshot
 
