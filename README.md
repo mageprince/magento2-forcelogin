@@ -7,9 +7,9 @@ You can also force login for specific customer group and storeview.
 
 # Installation Instruction
 
-- Copy the content of the repo to the Magento 2 root folder
+- Copy the content of the repository to the Magento 2 root folder
 - Run command: php bin/magento setup:upgrade
-- After that, if you website is in the Default or the Production mode, please type the command line to deploy the static content: php bin/magento setup:static-content:deploy
+- Run command: php bin/magento setup:static-content:deploy
 
 # Screenshot
 
