@@ -7,6 +7,7 @@ You can also force login for specific customer group and storeview.
 
 # Installation Instruction
 
+
 * Copy the content of the repo to the Magento 2 root folder
 * Run command:
 <b>php bin/magento setup:upgrade</b>
