@@ -1,15 +1,12 @@
 <?php
 
 
-namespace Prince\Adminlogs\Setup;
+namespace Prince\Forcelogin\Setup;
 
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
-/**
- * @codeCoverageIgnore
- */
 class InstallSchema implements InstallSchemaInterface
 {
 
@@ -22,13 +19,10 @@ class InstallSchema implements InstallSchemaInterface
     ) {
         $installer = $setup;
         $installer->startSetup();
+        $table_prince_forcelogin = $setup->getConnection()->newTable($setup->getTable('prince_forcelogin'));
 
-        /**
-         * Create table 'prince_adminlogs'
-         */
-        $table_prince_adminlogs = $setup->getConnection()->newTable($setup->getTable('prince_adminlogs'));
-        $table_prince_adminlogs->addColumn(
-            'adminlogs_id',
+        $table_prince_forcelogin->addColumn(
+            'forcelogin_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
             null,
             [
@@ -40,39 +34,47 @@ class InstallSchema implements InstallSchemaInterface
             'Entity ID'
         );
         
-        $table_prince_adminlogs->addColumn(
-            'username',
+        $table_prince_forcelogin->addColumn(
+            'name',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
             [],
-            'username'
+            'name'
         );
         
-        $table_prince_adminlogs->addColumn(
-            'ipaddress',
+        $table_prince_forcelogin->addColumn(
+            'url',
             \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
             null,
             [],
-            'ipaddress'
+            'url'
         );
         
-        $table_prince_adminlogs->addColumn(
+        $table_prince_forcelogin->addColumn(
+            'storeview',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            null,
+            [],
+            'storeview'
+        );
+        
+        $table_prince_forcelogin->addColumn(
+            'customer_group',
+            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+            null,
+            [],
+            'customer_group'
+        );
+        
+        $table_prince_forcelogin->addColumn(
             'status',
             \Magento\Framework\DB\Ddl\Table::TYPE_BOOLEAN,
             null,
             [],
             'status'
         );
-                
-        $table_prince_adminlogs->addColumn(
-            'date',
-            \Magento\Framework\DB\Ddl\Table::TYPE_DATETIME,
-            null,
-            [],
-            'date'
-        );
-        $setup->getConnection()->createTable($table_prince_adminlogs);
         
+        $setup->getConnection()->createTable($table_prince_forcelogin);
         $setup->endSetup();
     }
 }

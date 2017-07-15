@@ -1,13 +1,14 @@
 {
-    "name": "prince/module-adminlogs",
-    "description": "N/A",
+    "name": "prince/module-forcelogin",
+    "description": "Magento2 Force Login Module",
+    "minimum-stability": "stable",
     "require": {
         "magento/module-store": ">100.0",
         "magento/module-backend": ">100.0",
         "magento/framework": ">100.0"
     },
     "type": "magento2-module",
-    "version": "2.1.6",
+    "version": "1.0.2",
     "license": [
         "proprietary"
     ],
@@ -16,7 +17,13 @@
             "registration.php"
         ],
         "psr-4": {
-            "Prince\\Adminlogs\\": ""
+            "Prince\\Forcelogin\\": ""
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com"
+        }
+    ],
 }

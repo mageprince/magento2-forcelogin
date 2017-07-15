@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
-		<add id="Prince::top_adminlogs" module="Prince_Adminlogs" resource="Prince_Adminlogs::adminlogs" sortOrder="100" title="Admin Logs" parent="Magento_Reports::report_salesroot"/>
-		<add action="prince_adminlogs/adminlogs/index" id="Prince::prince_adminlogs" module="Prince_Adminlogs" parent="Prince::top_adminlogs" resource="Prince_Adminlogs::adminlogs" sortOrder="9999" title="Admin Logs"/>
+        <add id="Prince::prince_forcelogin" module="Prince_Forcelogin" title="Force Login" translate="title" sortOrder="30" resource="Magento_Backend::content" parent="Magento_Customer::customer"/>
+        <add action="prince_forcelogin/forcelogin/index" id="Prince::prince_forcelogin_main" module="Prince_Forcelogin" parent="Prince::prince_forcelogin" resource="Magento_Backend::content" sortOrder="10" title="Force Login"/>
+        <add action="adminhtml/system_config/edit/section/forcelogin" id="Prince::prince_forcelogin_settings" module="Prince_Forcelogin" parent="Prince::prince_forcelogin" resource="Magento_Backend::content" sortOrder="20" title="Settings"/>
 	</menu>
 </config>

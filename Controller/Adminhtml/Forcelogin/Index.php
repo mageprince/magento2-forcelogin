@@ -1,14 +1,11 @@
 <?php
 
 
-namespace Prince\Adminlogs\Controller\Adminhtml\Index;
+namespace Prince\Forcelogin\Controller\Adminhtml\Forcelogin;
 
-/**
- * Class Index
- * @package Prince\Adminlogs\Controller\Adminhtml\Index
- */
 class Index extends \Magento\Backend\App\Action
 {
+
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
@@ -17,7 +14,7 @@ class Index extends \Magento\Backend\App\Action
     /**
      * Constructor
      *
-     * @param \Magento\Backend\App\Action\Context  $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
@@ -29,12 +26,14 @@ class Index extends \Magento\Backend\App\Action
     }
 
     /**
-     * Execute view action
+     * Index action
      *
      * @return \Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
-        return $this->resultPageFactory->create();
+        $resultPage = $this->resultPageFactory->create();
+            $resultPage->getConfig()->getTitle()->prepend(__("Force Login"));
+            return $resultPage;
     }
 }

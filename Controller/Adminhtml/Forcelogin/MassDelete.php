@@ -1,12 +1,8 @@
 <?php
 
 
-namespace Prince\Adminlogs\Controller\Adminhtml\Adminlogs;
+namespace Prince\Forcelogin\Controller\Adminhtml\Forcelogin;
 
-/**
- * Class MassDelete
- * @package Prince\Adminlogs\Controller\Adminhtml\Adminlogs
- */
 class MassDelete extends \Magento\Backend\App\Action
 {
     /**
@@ -15,21 +11,23 @@ class MassDelete extends \Magento\Backend\App\Action
     private $filter;
 
     /**
-     * @var \Prince\Adminlogs\Model\ResourceModel\Adminlogs\CollectionFactory
+     * @var \Prince\Forcelogin\Model\ResourceModel\Forcelogin\CollectionFactory
      */
     private $collectionFactory;
     
     /**
+     * Constructor
+     *
      * @param \Magento\Ui\Component\MassAction\Filter $filter
-     * @param \Prince\Adminlogs\Model\ResourceModel\Adminlogs\CollectionFactory $collectionFactory
+     * @param \Prince\Forcelogin\Model\ResourceModel\Forcelogin\CollectionFactory $collectionFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
         \Magento\Ui\Component\MassAction\Filter $filter,
-        \Prince\Adminlogs\Model\ResourceModel\Adminlogs\CollectionFactory $collectionFactory,
+        \Prince\Forcelogin\Model\ResourceModel\Forcelogin\CollectionFactory $collectionFactory,
         \Magento\Backend\App\Action\Context $context
     ) {
-        $this->filter            = $filter;
+        $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
@@ -43,11 +41,11 @@ class MassDelete extends \Magento\Backend\App\Action
                 $item->delete();
                 $itemsDeleted++;
             }
-            $this->messageManager->addSuccess(__('A total of %1 Log(s) were deleted.', $itemsDeleted));
+            $this->messageManager->addSuccess(__('A total of %1 URL(s) were deleted.', $itemsDeleted));
         } catch (\Exception $e) {
             $this->messageManager->addError($e->getMessage());
         }
         $resultRedirect = $this->resultRedirectFactory->create();
-        return $resultRedirect->setPath('prince_adminlogs/adminlogs');
+        return $resultRedirect->setPath('prince_forcelogin/forcelogin/index');
     }
 }

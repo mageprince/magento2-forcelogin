@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
 	<router id="admin">
-		<route frontName="prince_adminlogs" id="prince_adminlogs">
-			<module before="Magento_Backend" name="Prince_Adminlogs"/>
+		<route frontName="prince_forcelogin" id="prince_forcelogin">
+			<module before="Magento_Backend" name="Prince_Forcelogin"/>
 		</route>
 	</router>
 </config>

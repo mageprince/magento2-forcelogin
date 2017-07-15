@@ -1,26 +1,22 @@
 <?php
 
 
-namespace Prince\Adminlogs\Model;
+namespace Prince\Forcelogin\Model;
 
-use Prince\Adminlogs\Model\ResourceModel\Adminlogs\CollectionFactory as AdminlogsCollectionFactory;
-use Prince\Adminlogs\Model\ResourceModel\Adminlogs as ResourceAdminlogs;
 use Magento\Framework\Reflection\DataObjectProcessor;
-use Prince\Adminlogs\Api\Data\AdminlogsSearchResultsInterfaceFactory;
-use Magento\Framework\Api\SortOrder;
-use Prince\Adminlogs\Api\AdminlogsRepositoryInterface;
+use Prince\Forcelogin\Model\ResourceModel\Forcelogin\CollectionFactory as ForceloginCollectionFactory;
+use Prince\Forcelogin\Model\ResourceModel\Forcelogin as ResourceForcelogin;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Api\SortOrder;
 use Magento\Framework\Exception\CouldNotSaveException;
-use Prince\Adminlogs\Api\Data\AdminlogsInterfaceFactory;
+use Prince\Forcelogin\Api\Data\ForceloginSearchResultsInterfaceFactory;
+use Prince\Forcelogin\Api\ForceloginRepositoryInterface;
 use Magento\Framework\Api\DataObjectHelper;
+use Prince\Forcelogin\Api\Data\ForceloginInterfaceFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Store\Model\StoreManagerInterface;
 
-/**
- * Class AdminlogsRepository
- * @package Prince\Adminlogs\Model
- */
-class AdminlogsRepository implements adminlogsRepositoryInterface
+class ForceloginRepository implements forceloginRepositoryInterface
 {
     /**
      * @var DataObjectHelper
@@ -28,19 +24,14 @@ class AdminlogsRepository implements adminlogsRepositoryInterface
     private $dataObjectHelper;
 
     /**
-     * @var AdminlogsCollectionFactory
+     * @var ForceloginInterfaceFactory
      */
-    private $adminlogsCollectionFactory;
+    private $dataForceloginFactory;
 
     /**
-     * @var AdminlogsSearchResultsInterfaceFactory
+     * @var ForceloginSearchResultsInterfaceFactory
      */
     private $searchResultsFactory;
-
-    /**
-     * @var AdminlogsFactory
-     */
-    private $adminlogsFactory;
 
     /**
      * @var StoreManagerInterface
@@ -48,46 +39,51 @@ class AdminlogsRepository implements adminlogsRepositoryInterface
     private $storeManager;
 
     /**
-     * @var ResourceAdminlogs
+     * @var ResourceForcelogin
      */
     private $resource;
 
     /**
-     * @var DataObjectProcessor
+     * @var DataObjectHelper
      */
     private $dataObjectProcessor;
 
     /**
-     * @var AdminlogsInterfaceFactory
+     * @var ForceloginFactory
      */
-    private $dataAdminlogsFactory;
+    private $forceloginFactory;
 
     /**
-     * @param ResourceAdminlogs $resource
-     * @param AdminlogsFactory $adminlogsFactory
-     * @param AdminlogsInterfaceFactory $dataAdminlogsFactory
-     * @param AdminlogsCollectionFactory $adminlogsCollectionFactory
-     * @param AdminlogsSearchResultsInterfaceFactory $searchResultsFactory
+     * @var ForceloginCollectionFactory
+     */
+    private $forceloginCollectionFactory;
+
+    /**
+     * @param ResourceForcelogin $resource
+     * @param ForceloginFactory $forceloginFactory
+     * @param ForceloginInterfaceFactory $dataForceloginFactory
+     * @param ForceloginCollectionFactory $forceloginCollectionFactory
+     * @param ForceloginSearchResultsInterfaceFactory $searchResultsFactory
      * @param DataObjectHelper $dataObjectHelper
      * @param DataObjectProcessor $dataObjectProcessor
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        ResourceAdminlogs $resource,
-        AdminlogsFactory $adminlogsFactory,
-        AdminlogsInterfaceFactory $dataAdminlogsFactory,
-        AdminlogsCollectionFactory $adminlogsCollectionFactory,
-        AdminlogsSearchResultsInterfaceFactory $searchResultsFactory,
+        ResourceForcelogin $resource,
+        ForceloginFactory $forceloginFactory,
+        ForceloginInterfaceFactory $dataForceloginFactory,
+        ForceloginCollectionFactory $forceloginCollectionFactory,
+        ForceloginSearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor,
         StoreManagerInterface $storeManager
     ) {
         $this->resource = $resource;
-        $this->adminlogsFactory = $adminlogsFactory;
-        $this->adminlogsCollectionFactory = $adminlogsCollectionFactory;
+        $this->forceloginFactory = $forceloginFactory;
+        $this->forceloginCollectionFactory = $forceloginCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataAdminlogsFactory = $dataAdminlogsFactory;
+        $this->dataForceloginFactory = $dataForceloginFactory;
         $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
     }
@@ -96,30 +92,30 @@ class AdminlogsRepository implements adminlogsRepositoryInterface
      * {@inheritdoc}
      */
     public function save(
-        \Prince\Adminlogs\Api\Data\AdminlogsInterface $adminlogs
+        \Prince\Forcelogin\Api\Data\ForceloginInterface $forcelogin
     ) {
         try {
-            $this->resource->save($adminlogs);
+            $this->resource->save($forcelogin);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(
-                'Could not save the adminlogs: %1',
+                'Could not save the forcelogin: %1',
                 $exception->getMessage()
             ));
         }
-        return $adminlogs;
+        return $forcelogin;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getById($adminlogsId)
+    public function getById($forceloginId)
     {
-        $adminlogs = $this->adminlogsFactory->create();
-        $adminlogs->load($adminlogsId);
-        if (!$adminlogs->getId()) {
-            throw new NoSuchEntityException(__('adminlogs with id "%1" does not exist.', $adminlogsId));
+        $forcelogin = $this->forceloginFactory->create();
+        $forcelogin->load($forceloginId);
+        if (!$forcelogin->getId()) {
+            throw new NoSuchEntityException(__('forcelogin with id "%1" does not exist.', $forceloginId));
         }
-        return $adminlogs;
+        return $forcelogin;
     }
 
     /**
@@ -131,7 +127,7 @@ class AdminlogsRepository implements adminlogsRepositoryInterface
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
         
-        $collection = $this->adminlogsCollectionFactory->create();
+        $collection = $this->forceloginCollectionFactory->create();
         foreach ($criteria->getFilterGroups() as $filterGroup) {
             foreach ($filterGroup->getFilters() as $filter) {
                 if ($filter->getField() === 'store_id') {
@@ -157,16 +153,16 @@ class AdminlogsRepository implements adminlogsRepositoryInterface
         $collection->setPageSize($criteria->getPageSize());
         $items = [];
         
-        foreach ($collection as $adminlogsModel) {
-            $adminlogsData = $this->dataAdminlogsFactory->create();
+        foreach ($collection as $forceloginModel) {
+            $forceloginData = $this->dataForceloginFactory->create();
             $this->dataObjectHelper->populateWithArray(
-                $adminlogsData,
-                $adminlogsModel->getData(),
-                'Prince\Adminlogs\Api\Data\AdminlogsInterface'
+                $forceloginData,
+                $forceloginModel->getData(),
+                'Prince\Forcelogin\Api\Data\ForceloginInterface'
             );
             $items[] = $this->dataObjectProcessor->buildOutputDataArray(
-                $adminlogsData,
-                'Prince\Adminlogs\Api\Data\AdminlogsInterface'
+                $forceloginData,
+                'Prince\Forcelogin\Api\Data\ForceloginInterface'
             );
         }
         $searchResults->setItems($items);
@@ -177,13 +173,13 @@ class AdminlogsRepository implements adminlogsRepositoryInterface
      * {@inheritdoc}
      */
     public function delete(
-        \Prince\Adminlogs\Api\Data\AdminlogsInterface $adminlogs
+        \Prince\Forcelogin\Api\Data\ForceloginInterface $forcelogin
     ) {
         try {
-            $this->resource->delete($adminlogs);
+            $this->resource->delete($forcelogin);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
-                'Could not delete the adminlogs: %1',
+                'Could not delete the forcelogin: %1',
                 $exception->getMessage()
             ));
         }
@@ -193,8 +189,8 @@ class AdminlogsRepository implements adminlogsRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function deleteById($adminlogsId)
+    public function deleteById($forceloginId)
     {
-        return $this->delete($this->getById($adminlogsId));
+        return $this->delete($this->getById($forceloginId));
     }
 }
