@@ -5,6 +5,8 @@ You can also force login for specific customer group and storeview.
 
 <b><h3>Admin->Customers->Force Login</h3></b>
 
+<b>Magento Market Place Link:</b> https://marketplace.magento.com/prince-module-forcelogins.html
+
 # Installation Instruction
 
 
