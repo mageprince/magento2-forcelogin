@@ -102,6 +102,7 @@
 		<column name="forcelogin_id">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
+					<item name="sortOrder" xsi:type="number">10</item>
 					<item name="filter" xsi:type="string">text</item>
 					<item name="sorting" xsi:type="string">asc</item>
 					<item name="label" translate="true" xsi:type="string">ID</item>
@@ -111,6 +112,7 @@
 		<column name="name">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
+					<item name="sortOrder" xsi:type="number">20</item>
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">Name</item>
 					<item name="editor" xsi:type="array">
@@ -122,16 +124,10 @@
 				</item>
 			</argument>
 		</column>
-		<actionsColumn class="Prince\Forcelogin\Ui\Component\Listing\Column\ForceloginActions" name="actions">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="indexField" xsi:type="string">forcelogin_id</item>
-				</item>
-			</argument>
-		</actionsColumn>
 		<column name="url">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
+					<item name="sortOrder" xsi:type="number">30</item>
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" translate="true" xsi:type="string">URL</item>
 					<item name="editor" xsi:type="array">
@@ -147,6 +143,7 @@
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Prince\Forcelogin\Ui\Component\Listing\Column\Status</item>
                 <item name="config" xsi:type="array">
+					<item name="sortOrder" xsi:type="number">40</item>
                     <item name="filter" xsi:type="string">select</item>
                     <item name="label" xsi:type="string" translate="true">Status</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
@@ -160,5 +157,12 @@
                 </item>
             </argument>
         </column>
+		<actionsColumn class="Prince\Forcelogin\Ui\Component\Listing\Column\ForceloginActions" name="actions">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="indexField" xsi:type="string">forcelogin_id</item>
+				</item>
+			</argument>
+		</actionsColumn>
 	</columns>
 </listing>
