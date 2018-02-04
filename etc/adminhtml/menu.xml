@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
-        <add id="Prince::prince_forcelogin" module="Prince_Forcelogin" title="Force Login" translate="title" sortOrder="30" resource="Magento_Backend::content" parent="Magento_Customer::customer"/>
-        <add action="prince_forcelogin/forcelogin/index" id="Prince::prince_forcelogin_main" module="Prince_Forcelogin" parent="Prince::prince_forcelogin" resource="Magento_Backend::content" sortOrder="10" title="Force Login"/>
-        <add action="adminhtml/system_config/edit/section/forcelogin" id="Prince::prince_forcelogin_settings" module="Prince_Forcelogin" parent="Prince::prince_forcelogin" resource="Magento_Backend::content" sortOrder="20" title="Settings"/>
+		<add id="Prince_Forcelogin::top_level" title="Forcelogin" module="Prince_Forcelogin" sortOrder="30" resource="Prince_Forcelogin::forcelogin"/>
+		<add id="Prince_Forcelogin::forcelogin_manage" title="Manage URL's" module="Prince_Forcelogin" sortOrder="10" parent="Prince_Forcelogin::top_level" action="prince_forcelogin/forcelogin/index/" resource="Magento_Backend::content"/>
+        <add id="Prince_Forcelogin::forcelogin_setting" title="Settings" module="Prince_Forcelogin" sortOrder="20" parent="Prince_Forcelogin::top_level" action="adminhtml/system_config/edit/section/forcelogin" resource="Magento_Backend::content"/>
 	</menu>
 </config>
