@@ -205,18 +205,17 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getDefaultAction()
     {
         $currentAction = $this->request->getFullActionName();
-        $loginAction = "customer_account_login";
-        $logoutAction = "customer_account_logoutSuccess";
-        $registerAction = "customer_account_create";
-        $accountAction = "customer_account_index";
+        $defaultActions = [
+            'customer_account_login',
+            'customer_account_logoutSuccess',
+            'customer_account_create',
+            'customer_account_index',
+            'customer_account_forgotpassword',
+            'customer_account_forgotpasswordpost'
+        ];
         $currentUrl = $this->getCurrentUrl();
         $loginPostUrl = $this->urlInterface->getUrl('customer/account/loginPost');
-        if ($currentAction != $loginAction
-            && $currentAction != $logoutAction
-            && $currentAction != $registerAction
-            && $currentAction != $accountAction
-            && $currentUrl != $loginPostUrl
-        ) {
+        if (!in_array($currentAction, $defaultActions) && ($currentUrl != $loginPostUrl)) {
             return false;
         } else {
             return true;
