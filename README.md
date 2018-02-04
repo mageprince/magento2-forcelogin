@@ -9,8 +9,10 @@ You can also force login for specific customer group and storeview.
 
 # Installation Instruction
 
-
-* Copy the content of the repo to the Magento 2 root folder
+* Download the extension
+* Unzip the file
+* Create a folder {Magento root}/app/code/Prince/Forcelogin 
+* Copy the content from the unzip folder 
 * Run command:
 <b>php bin/magento setup:upgrade</b>
 * Run Command:
