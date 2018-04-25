@@ -247,4 +247,17 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             return true;
         }
     }
+
+    /**
+     * Check is current page is homepage
+     *
+     * @return bool
+     */
+    public function checkIsHomePage()
+    {
+        $currentAction = $this->request->getFullActionName();
+        if($currentAction == "cms_index_index") {
+            return true;
+        }
+    }
 }

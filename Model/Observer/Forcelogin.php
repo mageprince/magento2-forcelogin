@@ -80,16 +80,24 @@ class Forcelogin implements ObserverInterface
         $defaultAction = $this->helper->getDefaultAction();
         $isCustomerLogin = $this->helper->checkCustomerlogin();
         $message = $this->helper->getMessage();
-        
+
         if (!$defaultAction && !$isCustomerLogin && $enable) {
-            if ($urlCondition && !$collection) {
-                $this->messageManager->addError($message);
-                $customRedirectionUrl = $this->url->getUrl('customer/account/login');
-                $this->redirect->setRedirect($customRedirectionUrl);
-            } elseif (!$urlCondition && $collection) {
-                $this->messageManager->addError($message);
-                $customRedirectionUrl = $this->url->getUrl('customer/account/login');
-                $this->redirect->setRedirect($customRedirectionUrl);
+            if($urlCondition == "2") {
+                if (!$this->helper->checkIsHomePage()) {
+                    $this->messageManager->addError($message);
+                    $customRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $this->redirect->setRedirect($customRedirectionUrl);
+                }
+            } else {
+                if ($urlCondition && !$collection) {
+                    $this->messageManager->addError($message);
+                    $customRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $this->redirect->setRedirect($customRedirectionUrl);
+                } elseif (!$urlCondition && $collection) {
+                    $this->messageManager->addError($message);
+                    $customRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $this->redirect->setRedirect($customRedirectionUrl);
+                }
             }
         }
     }

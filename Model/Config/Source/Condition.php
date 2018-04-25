@@ -39,6 +39,7 @@ class Condition implements \Magento\Framework\Option\ArrayInterface
         return [
             ['value' => 0, 'label' => __('Not Access Entered URL\'s without login')],
             ['value' => 1, 'label' => __('Only Access Entered URL\'s without login')],
+            ['value' => 2, 'label' => __('Only Access Homepage without login')],
         ];
     }
 }
