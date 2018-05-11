@@ -1,5 +1,5 @@
 {
-    "name": "prince/module-forcelogin",
+    "name": "mageprince/magento2-forcelogin",
     "description": "Magento2 Force Login Module",
     "minimum-stability": "stable",
     "require": {
