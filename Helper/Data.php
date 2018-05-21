@@ -38,6 +38,35 @@ use Magento\Framework\App\Request\Http;
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
+     * Configuration path of urlcondition
+     */
+    CONST CONFIG_PATH_URL_CONDITION = 'forcelogin/general/urlcondition';
+
+    /**
+     *  Configuration path of module enable/disable status
+     */
+    CONST CONFIG_PATH_MODULE_ENABLE = 'forcelogin/general/enable';
+
+    /**
+     * Configuration path of error message
+     */
+    CONST CONFIG_PATH_ERROR_MESSAGE = 'forcelogin/general/message';
+
+    /**
+     * Default cms page action
+     */
+    CONST CMS_PAGE_ACTION = 'cms_index_index';
+
+    /**
+     * login post url
+     */
+    CONST LOGIN_POST_URL = 'customer/account/loginPost';
+
+    /**
+     * customer login url
+     */
+    CONST CUSTOMER_LOGIN_URL = 'customer/account/login';
+    /**
      * @var \Magento\Customer\Model\Session
      */
     private $customerSession;
@@ -177,14 +206,18 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return string
      */
-    public function getConfig()
+    public function getConfig($path)
     {
         return $this->scopeConfig->getValue(
-            'forcelogin/general/urlcondition',
+            $path,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
     }
-    
+
+    public function getUrlCondition()
+    {
+        return $this->getConfig(self::CONFIG_PATH_URL_CONDITION);
+    }
     /**
      * Retrieve config value
      *
@@ -192,10 +225,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getEnable()
     {
-        return $this->scopeConfig->getValue(
-            'forcelogin/general/enable',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
+        return $this->getConfig(self::CONFIG_PATH_MODULE_ENABLE);
     }
 
     /**
@@ -205,10 +235,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getMessage()
     {
-        return $this->scopeConfig->getValue(
-            'forcelogin/general/message',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
+        return $this->getConfig(self::CONFIG_PATH_ERROR_MESSAGE);
     }
 
     /**
@@ -242,7 +269,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             'customer_account_forgotpasswordpost'
         ];
         $currentUrl = $this->getCurrentUrl();
-        $loginPostUrl = $this->urlInterface->getUrl('customer/account/loginPost');
+        $loginPostUrl = $this->urlInterface->getUrl(self::LOGIN_POST_URL);
         if (!in_array($currentAction, $defaultActions) && ($currentUrl != $loginPostUrl)) {
             return false;
         } else {
@@ -258,7 +285,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function checkIsHomePage()
     {
         $currentAction = $this->request->getFullActionName();
-        if($currentAction == "cms_index_index") {
+        if($currentAction == self::CMS_PAGE_ACTION) {
             return true;
         }
     }

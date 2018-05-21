@@ -31,6 +31,7 @@ namespace Prince\Forcelogin\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Prince\Forcelogin\Model\Config\Source\Condition;
+use Prince\Forcelogin\Helper\Data as ForceLoginHelper;
 
 class Forcelogin implements ObserverInterface
 {
@@ -61,7 +62,7 @@ class Forcelogin implements ObserverInterface
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
     public function __construct(
-        \Prince\Forcelogin\Helper\Data $helper,
+        ForceLoginHelper $helper,
         \Magento\Framework\App\Response\Http $redirect,
         \Magento\Framework\UrlInterface $url,
         \Magento\Framework\Message\ManagerInterface $messageManager
@@ -77,7 +78,7 @@ class Forcelogin implements ObserverInterface
         $url = $this->helper->getAfterBaseUrl();
         $collection = $this->helper->getUrlCollection($url);
         $enable = $this->helper->getEnable();
-        $urlCondition = $this->helper->getConfig();
+        $urlCondition = $this->helper->getUrlCondition();
         $defaultAction = $this->helper->getDefaultAction();
         $isCustomerLogin = $this->helper->checkCustomerlogin();
         $message = $this->helper->getMessage();
@@ -86,20 +87,21 @@ class Forcelogin implements ObserverInterface
             if($urlCondition == Condition::HOMEPAGE_ONLY_ACCESS) {
                 if (!$this->helper->checkIsHomePage()) {
                     $this->messageManager->addError($message);
-                    $customRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $customRedirectionUrl = $this->url->getUrl(ForceLoginHelper::CUSTOMER_LOGIN_URL);
                     $this->redirect->setRedirect($customRedirectionUrl);
                 }
             } else {
                 if ($urlCondition == Condition::URL_ACCESS_LOGIN && !$collection) {
                     $this->messageManager->addError($message);
-                    $customRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $customRedirectionUrl = $this->url->getUrl(ForceLoginHelper::CUSTOMER_LOGIN_URL);
                     $this->redirect->setRedirect($customRedirectionUrl);
                 } elseif (!$urlCondition && $collection) {
                     $this->messageManager->addError($message);
-                    $customRedirectionUrl = $this->url->getUrl('customer/account/login');
+                    $customRedirectionUrl = $this->url->getUrl(ForceLoginHelper::CUSTOMER_LOGIN_URL);
                     $this->redirect->setRedirect($customRedirectionUrl);
                 }
             }
+            return $this;
         }
     }
 }
