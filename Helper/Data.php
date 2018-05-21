@@ -214,12 +214,18 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         );
     }
 
+    /**
+     * Retrive url condition
+     *
+     * @return number
+     */
     public function getUrlCondition()
     {
         return $this->getConfig(self::CONFIG_PATH_URL_CONDITION);
     }
+
     /**
-     * Retrieve config value
+     * Retrive module status
      *
      * @return string
      */
@@ -229,7 +235,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Retrieve config value
+     * Retrieve error message
      *
      * @return string
      */
@@ -239,7 +245,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Retrieve config value
+     * Check customer is loggedIn or not
      *
      * @return boolean
      */
@@ -253,9 +259,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
     
     /**
-     * Retrieve config value
+     * Default actions
      *
-     * @return boolean
+     * @return bool
      */
     public function getDefaultAction()
     {
