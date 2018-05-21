@@ -76,11 +76,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         Session $customerSession,
+        \Magento\Framework\App\Http\Context $httpContext,
         Http $request,
         \Prince\Forcelogin\Model\Forcelogin $forceLoginModel,
         \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->customerSession = $customerSession;
+        $this->httpContext = $httpContext;
         $this->request = $request;
         $this->urlInterface = $context->getUrlBuilder();
         $this->scopeConfig = $context->getScopeConfig();
@@ -216,11 +218,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function checkCustomerlogin()
     {
-        if ($this->customerSession->isLoggedIn()) {
+        $isLoggedIn = $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+        if($isLoggedIn) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
     
     /**

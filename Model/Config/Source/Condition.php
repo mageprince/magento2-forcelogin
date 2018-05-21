@@ -30,6 +30,12 @@ namespace Prince\Forcelogin\Model\Config\Source;
 
 class Condition implements \Magento\Framework\Option\ArrayInterface
 {
+    CONST URL_NOT_ACCESS_LOGIN = 0;
+
+    CONST URL_ACCESS_LOGIN = 1;
+
+    CONST HOMEPAGE_ONLY_ACCESS = 2;
+
     /**
      * @return array
      */

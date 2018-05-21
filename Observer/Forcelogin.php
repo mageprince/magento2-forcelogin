@@ -26,10 +26,11 @@
  * @author MagePrince
  */
 
-namespace Prince\Forcelogin\Model\Observer;
+namespace Prince\Forcelogin\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
+use Prince\Forcelogin\Model\Config\Source\Condition;
 
 class Forcelogin implements ObserverInterface
 {
@@ -82,14 +83,14 @@ class Forcelogin implements ObserverInterface
         $message = $this->helper->getMessage();
 
         if (!$defaultAction && !$isCustomerLogin && $enable) {
-            if($urlCondition == "2") {
+            if($urlCondition == Condition::HOMEPAGE_ONLY_ACCESS) {
                 if (!$this->helper->checkIsHomePage()) {
                     $this->messageManager->addError($message);
                     $customRedirectionUrl = $this->url->getUrl('customer/account/login');
                     $this->redirect->setRedirect($customRedirectionUrl);
                 }
             } else {
-                if ($urlCondition && !$collection) {
+                if ($urlCondition == Condition::URL_ACCESS_LOGIN && !$collection) {
                     $this->messageManager->addError($message);
                     $customRedirectionUrl = $this->url->getUrl('customer/account/login');
                     $this->redirect->setRedirect($customRedirectionUrl);
