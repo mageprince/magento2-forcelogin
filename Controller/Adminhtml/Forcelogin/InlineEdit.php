@@ -55,6 +55,14 @@ class InlineEdit extends \Magento\Backend\App\Action
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Prince_Forcelogin::forcelogin_update');
+    }
+
+    /**
      * Inline edit action
      *
      * @return \Magento\Framework\Controller\ResultInterface

@@ -3,11 +3,13 @@
 	<acl>
 		<resources>
 			<resource id="Magento_Backend::admin">
-				<resource id="Prince_Forcelogin::forcelogin" sortOrder="10" title="forcelogin">
-					<resource id="Prince_Forcelogin::forcelogin_save" sortOrder="10" title="Save forcelogin"/>
-					<resource id="Prince_Forcelogin::forcelogin_delete" sortOrder="20" title="Delete forcelogin"/>
-					<resource id="Prince_Forcelogin::forcelogin_update" sortOrder="30" title="Update forcelogin"/>
-					<resource id="Prince_Forcelogin::forcelogin_view" sortOrder="40" title="View forcelogin"/>
+				<resource id="Magento_Customer::customer">
+					<resource id="Prince_Forcelogin::forcelogin" sortOrder="10" title="forcelogin">
+						<resource id="Prince_Forcelogin::forcelogin_save" sortOrder="10" title="Save forcelogin"/>
+						<resource id="Prince_Forcelogin::forcelogin_delete" sortOrder="20" title="Delete forcelogin"/>
+						<resource id="Prince_Forcelogin::forcelogin_update" sortOrder="30" title="Update forcelogin"/>
+						<resource id="Prince_Forcelogin::forcelogin_view" sortOrder="40" title="View forcelogin"/>
+					</resource>
 				</resource>
 			</resource>
 		</resources>

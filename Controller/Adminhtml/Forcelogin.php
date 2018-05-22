@@ -57,7 +57,7 @@ abstract class Forcelogin extends \Magento\Backend\App\Action
      */
     public function initPage($resultPage)
     {
-        $resultPage->setActiveMenu('Experius_Test::top_level')
+        $resultPage->setActiveMenu('Prince_Forcelogin::top_level')
             ->addBreadcrumb(__('Prince'), __('Prince'))
             ->addBreadcrumb(__('Forcelogin'), __('Forcelogin'));
         return $resultPage;

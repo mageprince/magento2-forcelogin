@@ -50,6 +50,14 @@ class NewAction extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Prince_Forcelogin::forcelogin_save');
+    }
+
+    /**
      * New action
      *
      * @return \Magento\Framework\Controller\ResultInterface

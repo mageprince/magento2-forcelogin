@@ -55,6 +55,14 @@ class Delete extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Prince_Forcelogin::forcelogin_delete');
+    }
+
+    /**
      * Delete action
      *
      * @return \Magento\Framework\Controller\ResultInterface

@@ -64,6 +64,14 @@ class Edit extends \Prince\Forcelogin\Controller\Adminhtml\Forcelogin
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Prince_Forcelogin::forcelogin_update');
+    }
+
+    /**
      * Edit action
      *
      * @return \Magento\Framework\Controller\ResultInterface

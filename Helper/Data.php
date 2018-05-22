@@ -82,7 +82,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     private $urlInterface;
 
     /**
-     * @var \Prince\Forcelogin\Model\Forcelogin
+     * @var \Prince\Forcelogin\Model\ResourceModel\Forcelogin\CollectionFactory
      */
     private $forceLoginModel;
 
@@ -97,9 +97,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public $scopeConfig;
 
     /**
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Framework\App\Request\Http $request
-     * @param \Prince\Forcelogin\Model\Forcelogin $forceLoginModel
+     * Data constructor.
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param Session $customerSession
+     * @param \Magento\Framework\App\Http\Context $httpContext
+     * @param Http $request
+     * @param \Prince\Forcelogin\Model\ResourceModel\Forcelogin\CollectionFactory $forceLoginModel
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      */
     public function __construct(
@@ -107,7 +110,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         Session $customerSession,
         \Magento\Framework\App\Http\Context $httpContext,
         Http $request,
-        \Prince\Forcelogin\Model\Forcelogin $forceLoginModel,
+        \Prince\Forcelogin\Model\ResourceModel\Forcelogin\CollectionFactory $forceLoginModel,
         \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->customerSession = $customerSession;
@@ -150,7 +153,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCollection()
     {
-        return $this->forceLoginModel->getCollection();
+        return $this->forceLoginModel->create();
     }
     
     /**
