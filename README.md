@@ -1,5 +1,9 @@
 # Magento2 Force Login
 
+# IN DEVELOPMENT
+
+NOTE: DONT USE THIS MODULE IN LIVE SITE
+
 The Force Login extension for Magento 2 force customer to login to access pages which is added from admin.
 You can also force login for specific customer group and storeview.
 
